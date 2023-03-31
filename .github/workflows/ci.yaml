@@ -23,6 +23,7 @@ jobs:
       - uses: avto-dev/markdown-lint@v1
         with:
           args: /github/workspace
+
   checkstyle:
     runs-on: ubuntu-latest
     steps:
@@ -30,7 +31,7 @@ jobs:
       - uses: actions/setup-java@v3
         with:
           distribution: temurin
-          java-version: 11
+          java-version: 17
           cache: maven
       - run: mvn -B -ntp dependency:go-offline
       - run: mvn -B -ntp checkstyle:check
