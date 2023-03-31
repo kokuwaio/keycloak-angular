@@ -4,8 +4,7 @@ metadata:
   name: keycloak
 spec:
   serviceName: keycloak-headless
-  replicas: 3
-  minReadySeconds: 5
+  replicas: 1
   selector:
     matchLabels:
       app.kubernetes.io/name: keycloak
@@ -18,6 +17,54 @@ spec:
         prometheus.io/port: "8080"
         prometheus.io/path: /realms/master/metrics
     spec:
+      initContainers:
+        - name: postgresql
+          image: postgres:15.2
+          command: [sh, -c, until psql ; do sleep 1 ; done]
+          env:
+            - name: PGCONNECT_TIMEOUT
+              value: "1"
+            - name: PGHOST
+              valueFrom:
+                secretKeyRef:
+                  name: keycloak-database
+                  key: KC_DB_URL_HOST
+            - name: PGDATABASE
+              valueFrom:
+                secretKeyRef:
+                  name: keycloak-database
+                  key: KC_DB_DATABASE
+            - name: PGUSER
+              valueFrom:
+                secretKeyRef:
+                  name: keycloak-database
+                  key: KC_DB_USERNAME
+            - name: PGPASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: keycloak-database
+                  key: KC_DB_PASSWORD
+          securityContext:
+            runAsUser: 10001
+            runAsGroup: 10001
+            readOnlyRootFilesystem: true
+        - name: realms
+          image: kokuwaio/keycloak:21.0.1-distroless-import
+          envFrom:
+            - secretRef:
+                name: keycloak-database
+            - secretRef:
+                name: keycloak-admin
+          securityContext:
+            runAsUser: 10001
+            runAsGroup: 10001
+            readOnlyRootFilesystem: true
+          volumeMounts:
+            - name: tmp
+              mountPath: /tmp
+            - name: realms
+              mountPath: /realms
+              readOnly: true
       containers:
         - name: keycloak
           image: kokuwaio/keycloak:21.0.1-distroless
@@ -63,3 +110,6 @@ spec:
       volumes:
         - name: tmp
           emptyDir: {}
+        - name: realms
+          configMap:
+            name: keycloak-realms
