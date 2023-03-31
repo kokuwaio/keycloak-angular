@@ -33,7 +33,7 @@ spec:
               valueFrom:
                 secretKeyRef:
                   name: keycloak-database
-                  key: KC_DB_DATABASE
+                  key: KC_DB_URL_DATABASE
             - name: PGUSER
               valueFrom:
                 secretKeyRef:
