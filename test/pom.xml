@@ -82,11 +82,6 @@
 									<directory>${project.basedir}/src/test/k3s</directory>
 									<filtering>true</filtering>
 								</resource>
-
-								<resource>
-									<directory>${project.basedir}/../kubernetes</directory>
-									<filtering>true</filtering>
-								</resource>
 							</resources>
 							<outputDirectory>${project.build.directory}/k3s</outputDirectory>
 						</configuration>
