@@ -22,4 +22,4 @@ export KUBECONFIG=~/.kube/k3s.yaml
 kubectl apply -k kubernetes
 ```
 
-curl http://jwt-verifier.127.0.0.1.nip.io:8080
+curl <http://jwt-verifier.127.0.0.1.nip.io:8080>
