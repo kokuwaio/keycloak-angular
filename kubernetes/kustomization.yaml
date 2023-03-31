@@ -1,0 +1,6 @@
+resources:
+  - dashboard
+  - help
+  - keycloak
+  - postgresql
+  - traefik
