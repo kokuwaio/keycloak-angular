@@ -20,7 +20,7 @@ spec:
     spec:
       containers:
         - name: keycloak
-          image: kokuwaio/keycloak/21.0.1-distroless
+          image: kokuwaio/keycloak:21.0.1-distroless
           envFrom:
             - configMapRef:
                 name: keycloak-config
