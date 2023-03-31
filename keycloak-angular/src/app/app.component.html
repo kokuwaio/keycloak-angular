@@ -1,0 +1,14 @@
+<!--The content below is only a placeholder and can be replaced.-->
+<div *ngIf="accessToken">
+    <div style="text-align:center">
+      <h1>Welcome to {{ title }}!</h1>
+    </div>
+  
+    <h2>Access Token</h2>
+    <p>{{ accessToken }}</p>
+  
+    <p>
+      <button (click)="refresh()">Refresh</button>
+    </p>
+  </div>
+  

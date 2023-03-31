@@ -1,18 +1,16 @@
-import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
+import { NgModule } from '@angular/core';
 
-import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
+import { OAuthModule, OAuthStorage } from 'angular-oauth2-oidc';
+import { HttpClientModule } from '@angular/common/http';
 
 @NgModule({
-  declarations: [
-    AppComponent
+  imports: [BrowserModule, OAuthModule.forRoot(), HttpClientModule],
+  declarations: [AppComponent],
+  providers: [
+    // { provide: OAuthStorage, useValue: localStorage }
   ],
-  imports: [
-    BrowserModule,
-    AppRoutingModule
-  ],
-  providers: [],
-  bootstrap: [AppComponent]
+  bootstrap: [AppComponent],
 })
-export class AppModule { }
+export class AppModule {}
