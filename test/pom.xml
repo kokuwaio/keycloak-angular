@@ -111,8 +111,8 @@
 						<portBinding>8080:8080</portBinding>
 					</portBindings>
 					<ctrImages>
-						<ctrImage>postgres:14</ctrImage>
-						<ctrImage>traefik:v2.9</ctrImage>
+						<ctrImage>quay.io/wi_stefan/postgres:14</ctrImage>
+						<ctrImage>quay.io/wi_stefan/traefik:v2.9</ctrImage>
 					</ctrImages>
 					<dockerImages>
 						<dockerImage>${image.repository}/backend:${image.tag}</dockerImage>

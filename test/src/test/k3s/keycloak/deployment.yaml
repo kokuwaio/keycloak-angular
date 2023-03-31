@@ -13,7 +13,7 @@ spec:
     spec:
       initContainers:
         - name: postgresql
-          image: postgres:14
+          image: quay.io/wi_stefan/postgres:14
           command: [sh, -c, until psql ; do sleep 1 ; done]
           env:
             - name: PGCONNECT_TIMEOUT

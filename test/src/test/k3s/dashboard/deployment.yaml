@@ -13,7 +13,7 @@ spec:
     spec:
       containers:
         - name: dashboard
-          image: kubernetesui/dashboard:v2.7.0
+          image: quay.io/wi_stefan/kubernetesui/dashboard:v2.7.0
           args:
             - --namespace=default
             - --disable-settings-authorizer=true
