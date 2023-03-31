@@ -20,7 +20,7 @@ spec:
     spec:
       containers:
         - name: keycloak
-          image: ${image.name}:${image.tag}-${image.tag.test}
+          image: kokuwaio/keycloak/21.0.1-distroless
           imagePullPolicy: Never
           envFrom:
             - configMapRef:
