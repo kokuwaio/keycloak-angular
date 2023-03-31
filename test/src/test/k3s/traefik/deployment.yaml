@@ -15,7 +15,7 @@ spec:
     spec:
       containers:
         - name: traefik
-          image: traefik:v2.9
+          image: quay.io/wi_stefan/traefik:v2.9
           args:
             - --providers.kubernetesingress=true
             - --entrypoints.traefik.address=:8090

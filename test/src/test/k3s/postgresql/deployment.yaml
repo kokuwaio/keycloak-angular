@@ -13,7 +13,7 @@ spec:
     spec:
       containers:
         - name: postgresql
-          image: postgres:14
+          image: quay.io/wi_stefan/postgres:14
           envFrom:
             - secretRef:
                 name: postgresql-secret
