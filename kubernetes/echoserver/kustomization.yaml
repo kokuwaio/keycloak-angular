@@ -1,8 +1,0 @@
-commonLabels:
-  app.kubernetes.io/name: echoserver
-
-resources:
-  - deployment.yaml
-  - service.yaml
-
-

@@ -13,7 +13,7 @@ spec:
     spec:
       initContainers:
         - name: postgresql
-          image: postgres:15.2
+          image: postgres:14
           command: [sh, -c, until psql ; do sleep 1 ; done]
           env:
             - name: PGCONNECT_TIMEOUT
@@ -43,7 +43,7 @@ spec:
             runAsGroup: 10001
             readOnlyRootFilesystem: true
         - name: realms
-          image: kokuwaio/keycloak:21.0.1-distroless-import
+          image: ghcr.io/kokuwaio/keycloak:21.0.1-distroless-import
           envFrom:
             - secretRef:
                 name: keycloak-database
@@ -61,7 +61,7 @@ spec:
               readOnly: true
       containers:
         - name: keycloak
-          image: kokuwaio/keycloak:21.0.1-distroless
+          image: ghcr.io/kokuwaio/keycloak:21.0.1-distroless
           envFrom:
             - configMapRef:
                 name: keycloak-config

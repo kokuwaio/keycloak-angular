@@ -1,0 +1,303 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
+	<modelVersion>4.0.0</modelVersion>
+
+	<groupId>io.kokuwa.keycloak</groupId>
+	<artifactId>keycloak-angular</artifactId>
+	<version>0.0.1-SNAPSHOT</version>
+	<packaging>pom</packaging>
+
+	<name>Keycloak Angular</name>
+	<description>Keycloak Angular Example</description>
+	<url>https://github.com/kokuwaio/keycloak-angular</url>
+	<inceptionYear>2023</inceptionYear>
+	<organization>
+		<name>Kokuwa.io</name>
+		<url>http://kokuwa.io</url>
+	</organization>
+	<licenses>
+		<license>
+			<name>Apache License 2.0</name>
+			<url>https://www.apache.org/licenses/LICENSE-2.0</url>
+		</license>
+	</licenses>
+
+	<modules>
+		<module>backend</module>
+		<module>keycloak-angular</module>
+		<module>test</module>
+	</modules>
+
+	<issueManagement>
+		<system>github</system>
+		<url>https://github.com/kokuwaio/keycloak-angular/issues</url>
+	</issueManagement>
+	<ciManagement>
+		<system>github</system>
+		<url>https://github.com/kokuwaio/keycloak-angular/actions</url>
+	</ciManagement>
+
+	<properties>
+
+		<!-- ===================================================================== -->
+		<!-- ============================== Build ================================ -->
+		<!-- ===================================================================== -->
+
+		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+		<project.build.propertiesEncoding>ISO-8859-1</project.build.propertiesEncoding>
+
+		<maven.compiler.source>17</maven.compiler.source>
+		<maven.compiler.target>17</maven.compiler.target>
+		<maven.compiler.parameters>true</maven.compiler.parameters>
+		<maven.compiler.showDeprecation>true</maven.compiler.showDeprecation>
+		<maven.compiler.showWarnings>true</maven.compiler.showWarnings>
+		<maven.compiler.failOnWarning>true</maven.compiler.failOnWarning>
+		<maven.test.redirectTestOutputToFile>true</maven.test.redirectTestOutputToFile>
+
+		<image.tag>${project.version}</image.tag>
+		<image.repository>ghcr.io/kokuwaio/keycloak-angular</image.repository>
+
+		<!-- ===================================================================== -->
+		<!-- ============================= Versions ============================== -->
+		<!-- ===================================================================== -->
+
+		<!-- plugins -->
+
+		<version.org.apache.maven.plugins.checkstyle>3.2.1</version.org.apache.maven.plugins.checkstyle>
+		<version.org.apache.maven.plugins.clean>3.2.0</version.org.apache.maven.plugins.clean>
+		<version.org.apache.maven.plugins.compiler>3.11.0</version.org.apache.maven.plugins.compiler>
+		<version.org.apache.maven.plugins.dependency>3.5.0</version.org.apache.maven.plugins.dependency>
+		<version.org.apache.maven.plugins.deploy>3.1.0</version.org.apache.maven.plugins.deploy>
+		<version.org.apache.maven.plugins.install>3.1.0</version.org.apache.maven.plugins.install>
+		<version.org.apache.maven.plugins.jar>3.3.0</version.org.apache.maven.plugins.jar>
+		<version.org.apache.maven.plugins.resources>3.3.0</version.org.apache.maven.plugins.resources>
+		<version.org.apache.maven.plugins.surefire>3.0.0</version.org.apache.maven.plugins.surefire>
+		<version.org.codehaus.mojo.exec>3.1.0</version.org.codehaus.mojo.exec>
+		<version.org.codehaus.mojo.tidy>1.2.0</version.org.codehaus.mojo.tidy>
+		<version.com.google.cloud.jib>3.3.1</version.com.google.cloud.jib>
+		<version.com.puppycrawl.tools.checkstyle>10.9.2</version.com.puppycrawl.tools.checkstyle>
+		<version.io.kokuwa.checkstyle>0.5.6</version.io.kokuwa.checkstyle>
+		<version.io.kokuwa.maven.k3s>0.8.0</version.io.kokuwa.maven.k3s>
+
+		<!-- dependencies -->
+
+		<version.io.kokuwa.micronaut.logging>3.0.6</version.io.kokuwa.micronaut.logging>
+		<version.io.micronaut>3.8.8</version.io.micronaut>
+		<version.org.projectlombok>1.18.26</version.org.projectlombok>
+
+	</properties>
+
+	<dependencyManagement>
+		<dependencies>
+
+			<!-- micronaut -->
+			<dependency>
+				<groupId>io.micronaut</groupId>
+				<artifactId>micronaut-bom</artifactId>
+				<version>${version.io.micronaut}</version>
+				<type>pom</type>
+				<scope>import</scope>
+			</dependency>
+			<dependency>
+				<groupId>io.micronaut</groupId>
+				<artifactId>micronaut-inject</artifactId>
+				<version>${version.io.micronaut}</version>
+				<exclusions>
+					<!-- was replaced by jakarta -->
+					<exclusion>
+						<groupId>javax.annotation</groupId>
+						<artifactId>javax.annotation-api</artifactId>
+					</exclusion>
+				</exclusions>
+			</dependency>
+			<dependency>
+				<groupId>io.kokuwa.micronaut</groupId>
+				<artifactId>micronaut-logging</artifactId>
+				<version>${version.io.kokuwa.micronaut.logging}</version>
+			</dependency>
+
+			<!-- libraries -->
+			<dependency>
+				<groupId>org.projectlombok</groupId>
+				<artifactId>lombok</artifactId>
+				<version>${version.org.projectlombok}</version>
+			</dependency>
+
+		</dependencies>
+	</dependencyManagement>
+	<dependencies>
+
+		<!-- libraries -->
+		<dependency>
+			<groupId>org.projectlombok</groupId>
+			<artifactId>lombok</artifactId>
+			<scope>provided</scope>
+		</dependency>
+		<dependency>
+			<groupId>org.junit.jupiter</groupId>
+			<artifactId>junit-jupiter-params</artifactId>
+			<scope>test</scope>
+		</dependency>
+
+		<!-- avoid compiler warning, see https://docs.micronaut.io/latest/guide/#_nullable_annotations -->
+		<dependency>
+			<groupId>com.google.code.findbugs</groupId>
+			<artifactId>jsr305</artifactId>
+			<scope>provided</scope>
+		</dependency>
+
+	</dependencies>
+
+	<build>
+		<pluginManagement>
+			<plugins>
+				<plugin>
+					<groupId>org.apache.maven.plugins</groupId>
+					<artifactId>maven-checkstyle-plugin</artifactId>
+					<version>${version.org.apache.maven.plugins.checkstyle}</version>
+					<configuration>
+						<configLocation>checkstyle.xml</configLocation>
+						<suppressionsLocation>checkstyle-suppression.xml</suppressionsLocation>
+						<includeTestSourceDirectory>true</includeTestSourceDirectory>
+					</configuration>
+					<dependencies>
+						<dependency>
+							<groupId>com.puppycrawl.tools</groupId>
+							<artifactId>checkstyle</artifactId>
+							<version>${version.com.puppycrawl.tools.checkstyle}</version>
+						</dependency>
+						<dependency>
+							<groupId>io.kokuwa</groupId>
+							<artifactId>maven-parent</artifactId>
+							<version>${version.io.kokuwa.checkstyle}</version>
+							<type>zip</type>
+							<classifier>checkstyle</classifier>
+						</dependency>
+					</dependencies>
+				</plugin>
+				<plugin>
+					<groupId>org.apache.maven.plugins</groupId>
+					<artifactId>maven-clean-plugin</artifactId>
+					<version>${version.org.apache.maven.plugins.clean}</version>
+				</plugin>
+				<plugin>
+					<groupId>org.apache.maven.plugins</groupId>
+					<artifactId>maven-compiler-plugin</artifactId>
+					<version>${version.org.apache.maven.plugins.compiler}</version>
+					<configuration>
+						<compilerArgument>-Xlint:unchecked</compilerArgument>
+					</configuration>
+				</plugin>
+				<plugin>
+					<groupId>org.apache.maven.plugins</groupId>
+					<artifactId>maven-dependency-plugin</artifactId>
+					<version>${version.org.apache.maven.plugins.dependency}</version>
+				</plugin>
+				<plugin>
+					<groupId>org.apache.maven.plugins</groupId>
+					<artifactId>maven-deploy-plugin</artifactId>
+					<version>${version.org.apache.maven.plugins.deploy}</version>
+				</plugin>
+				<plugin>
+					<groupId>org.apache.maven.plugins</groupId>
+					<artifactId>maven-failsafe-plugin</artifactId>
+					<version>${version.org.apache.maven.plugins.surefire}</version>
+				</plugin>
+				<plugin>
+					<groupId>org.apache.maven.plugins</groupId>
+					<artifactId>maven-install-plugin</artifactId>
+					<version>${version.org.apache.maven.plugins.install}</version>
+				</plugin>
+				<plugin>
+					<groupId>org.apache.maven.plugins</groupId>
+					<artifactId>maven-jar-plugin</artifactId>
+					<version>${version.org.apache.maven.plugins.jar}</version>
+				</plugin>
+				<plugin>
+					<groupId>org.apache.maven.plugins</groupId>
+					<artifactId>maven-resources-plugin</artifactId>
+					<version>${version.org.apache.maven.plugins.resources}</version>
+				</plugin>
+				<plugin>
+					<groupId>org.apache.maven.plugins</groupId>
+					<artifactId>maven-surefire-plugin</artifactId>
+					<version>${version.org.apache.maven.plugins.surefire}</version>
+				</plugin>
+				<plugin>
+					<groupId>org.codehaus.mojo</groupId>
+					<artifactId>exec-maven-plugin</artifactId>
+					<version>${version.org.codehaus.mojo.exec}</version>
+				</plugin>
+				<plugin>
+					<groupId>org.codehaus.mojo</groupId>
+					<artifactId>tidy-maven-plugin</artifactId>
+					<version>${version.org.codehaus.mojo.tidy}</version>
+				</plugin>
+				<plugin>
+					<groupId>com.google.cloud.tools</groupId>
+					<artifactId>jib-maven-plugin</artifactId>
+					<version>${version.com.google.cloud.jib}</version>
+				</plugin>
+				<plugin>
+					<groupId>io.kokuwa.maven</groupId>
+					<artifactId>k3s-maven-plugin</artifactId>
+					<version>${version.io.kokuwa.maven.k3s}</version>
+					<configuration>
+						<imageTag>v1.24.12-k3s1</imageTag>
+					</configuration>
+				</plugin>
+			</plugins>
+		</pluginManagement>
+		<plugins>
+
+			<!-- fail if any pom is dirty -->
+			<plugin>
+				<groupId>org.codehaus.mojo</groupId>
+				<artifactId>tidy-maven-plugin</artifactId>
+				<executions>
+					<execution>
+						<goals>
+							<goal>check</goal>
+						</goals>
+					</execution>
+				</executions>
+			</plugin>
+
+			<!-- fail if checkstyle reports problems -->
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-checkstyle-plugin</artifactId>
+				<executions>
+					<execution>
+						<goals>
+							<goal>check</goal>
+						</goals>
+					</execution>
+				</executions>
+			</plugin>
+
+			<!-- remove default invocations -->
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-install-plugin</artifactId>
+				<executions>
+					<execution>
+						<id>default-install</id>
+						<phase />
+					</execution>
+				</executions>
+			</plugin>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-deploy-plugin</artifactId>
+				<executions>
+					<execution>
+						<id>default-deploy</id>
+						<phase />
+					</execution>
+				</executions>
+			</plugin>
+
+		</plugins>
+	</build>
+</project>

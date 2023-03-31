@@ -1,9 +1,8 @@
 resources:
   - dashboard
-  - echoserver
+  - backend
   - frontend
   - help
-  - jwt-verifier
   - keycloak
   - postgresql
   - traefik

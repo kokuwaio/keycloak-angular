@@ -1,0 +1,152 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
+	<modelVersion>4.0.0</modelVersion>
+
+	<parent>
+		<groupId>io.kokuwa.keycloak</groupId>
+		<artifactId>keycloak-angular</artifactId>
+		<version>0.0.1-SNAPSHOT</version>
+	</parent>
+
+	<artifactId>keycloak-angular-test</artifactId>
+
+	<name>Keycloak Angular :: Test</name>
+
+	<dependencies>
+
+		<!-- micronaut -->
+		<dependency>
+			<groupId>io.micronaut</groupId>
+			<artifactId>micronaut-http-client</artifactId>
+			<scope>test</scope>
+		</dependency>
+		<dependency>
+			<groupId>io.micronaut.test</groupId>
+			<artifactId>micronaut-test-junit5</artifactId>
+			<scope>test</scope>
+		</dependency>
+		<dependency>
+			<groupId>io.kokuwa.micronaut</groupId>
+			<artifactId>micronaut-logging</artifactId>
+			<scope>test</scope>
+		</dependency>
+
+	</dependencies>
+
+	<build>
+		<plugins>
+
+			<!-- configure annotation processors -->
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-compiler-plugin</artifactId>
+				<executions>
+					<execution>
+						<id>default-compile</id>
+						<phase />
+					</execution>
+				</executions>
+				<configuration>
+					<annotationProcessorPaths>
+						<path>
+							<groupId>org.projectlombok</groupId>
+							<artifactId>lombok</artifactId>
+							<version>${version.org.projectlombok}</version>
+						</path>
+						<path>
+							<groupId>io.micronaut</groupId>
+							<artifactId>micronaut-inject-java</artifactId>
+							<version>${version.io.micronaut}</version>
+						</path>
+					</annotationProcessorPaths>
+				</configuration>
+			</plugin>
+
+			<!-- copy k3s -->
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-resources-plugin</artifactId>
+				<executions>
+					<execution>
+						<id>default-resources</id>
+						<phase />
+					</execution>
+					<execution>
+						<phase>generate-test-resources</phase>
+						<goals>
+							<goal>copy-resources</goal>
+						</goals>
+						<configuration>
+							<resources>
+								<resource>
+									<directory>${project.basedir}/src/test/k3s</directory>
+									<filtering>true</filtering>
+								</resource>
+
+								<resource>
+									<directory>${project.basedir}/../kubernetes</directory>
+									<filtering>true</filtering>
+								</resource>
+							</resources>
+							<outputDirectory>${project.build.directory}/k3s</outputDirectory>
+						</configuration>
+					</execution>
+				</executions>
+			</plugin>
+
+			<!-- handle k3s lifecycle -->
+			<plugin>
+				<groupId>io.kokuwa.maven</groupId>
+				<artifactId>k3s-maven-plugin</artifactId>
+				<executions>
+					<execution>
+						<goals>
+							<goal>create</goal>
+							<goal>start</goal>
+							<goal>image</goal>
+							<goal>kubectl</goal>
+							<goal>rm</goal>
+						</goals>
+					</execution>
+				</executions>
+				<configuration>
+					<command>kubectl apply -k .</command>
+					<manifests>${project.build.directory}/k3s</manifests>
+					<portBindings>
+						<portBinding>8080:8080</portBinding>
+					</portBindings>
+					<ctrImages>
+						<ctrImage>postgres:14</ctrImage>
+						<ctrImage>traefik:v2.9</ctrImage>
+					</ctrImages>
+					<dockerImages>
+						<dockerImage>${image.repository}/backend:${image.tag}</dockerImage>
+						<dockerImage>${image.repository}/frontend:${image.tag}</dockerImage>
+					</dockerImages>
+				</configuration>
+			</plugin>
+
+			<!-- remove default invocations -->
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-surefire-plugin</artifactId>
+				<executions>
+					<execution>
+						<id>default-test</id>
+						<phase />
+					</execution>
+				</executions>
+			</plugin>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-jar-plugin</artifactId>
+				<executions>
+					<execution>
+						<id>default-jar</id>
+						<phase />
+					</execution>
+				</executions>
+			</plugin>
+		</plugins>
+	</build>
+</project>

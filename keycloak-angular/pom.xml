@@ -1,0 +1,98 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
+	<modelVersion>4.0.0</modelVersion>
+
+	<parent>
+	<groupId>io.kokuwa.keycloak</groupId>
+	<artifactId>keycloak-angular</artifactId>
+	<version>0.0.1-SNAPSHOT</version>
+	</parent>
+
+	<artifactId>keycloak-angular-frontend</artifactId>
+	<packaging>pom</packaging>
+
+	<name>Keycloak Angular :: Frontend</name>
+
+	<build>
+		<plugins>
+
+			<!-- clean -->
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-clean-plugin</artifactId>
+				<executions>
+					<execution>
+						<id>default-clean</id>
+						<configuration>
+							<filesets>
+								<fileset>
+									<directory>${project.basedir}/dist</directory>
+								</fileset>
+							</filesets>
+						</configuration>
+					</execution>
+				</executions>
+			</plugin>
+
+			<!-- run yarn -->
+			<plugin>
+				<groupId>org.codehaus.mojo</groupId>
+				<artifactId>exec-maven-plugin</artifactId>
+				<executions>
+					<execution>
+						<id>yarn-install</id>
+						<phase>validate</phase>
+						<goals>
+							<goal>exec</goal>
+						</goals>
+						<configuration>
+							<executable>yarn</executable>
+							<arguments>install</arguments>
+						</configuration>
+					</execution>
+					<execution>
+						<id>yarn-build</id>
+						<phase>compile</phase>
+						<goals>
+							<goal>exec</goal>
+						</goals>
+						<configuration>
+							<executable>yarn</executable>
+							<arguments>build</arguments>
+						</configuration>
+					</execution>
+					<execution>
+						<id>docker</id>
+						<phase>package</phase>
+						<goals>
+							<goal>exec</goal>
+						</goals>
+						<configuration>
+							<executable>docker</executable>
+							<arguments>
+								<argument>build</argument>
+								<argument>${project.basedir}</argument>
+								<argument>--tag=${image.repository}/frontend:${image.tag}</argument>
+							</arguments>
+						</configuration>
+					</execution>
+					<execution>
+						<id>deploy</id>
+						<phase>deploy</phase>
+						<goals>
+							<goal>exec</goal>
+						</goals>
+						<configuration>
+							<executable>docker</executable>
+							<arguments>
+								<argument>push</argument>
+								<argument>${image.repository}/frontend:${image.tag}</argument>
+							</arguments>
+						</configuration>
+					</execution>
+				</executions>
+			</plugin>
+
+		</plugins>
+	</build>
+</project>
