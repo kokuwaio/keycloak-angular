@@ -5,11 +5,11 @@ metadata:
 spec:
   selector:
     matchLabels:
-      app: postgresql
+      app.kubernetes.io/name: postgresql
   template:
     metadata:
       labels:
-        app: postgresql
+        app.kubernetes.io/name: postgresql
     spec:
       containers:
         - name: postgresql
