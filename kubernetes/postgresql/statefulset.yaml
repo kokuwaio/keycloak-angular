@@ -65,8 +65,9 @@ spec:
           configMap:
             name: postgresql-config
         - name: data
-          persistentVolumeClaim:
-            claimName: postgresql
+          hostPath:
+            path: /var/lib/rancher/k3s/storage/postgresql
+            type: DirectoryOrCreate
         - name: run
           emptyDir: {}
         - name: tmp
