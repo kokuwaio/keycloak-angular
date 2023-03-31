@@ -1,6 +1,7 @@
 resources:
   - dashboard
   - echoserver
+  - frontend
   - help
   - jwt-verifier
   - keycloak
