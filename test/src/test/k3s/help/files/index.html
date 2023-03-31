@@ -24,14 +24,15 @@
 	<h1>Token</h1>
 	<pre>
 		OICD_URL=http://keycloak.127.0.0.1.nip.io:8080/realms/kokuwa/protocol/openid-connect
-		TOKEN=`curl -v $OICD_URL/token -s -dclient_id=angular -dclient_secret=changeMe -dusername=admin -dpassword=password -dgrant_type=password -dscope=openid | jq -r .access_token`
+		TOKEN=`curl -s $OICD_URL/token -dclient_id=angular -dclient_secret=changeMe -dusername=admin -dpassword=password -dgrant_type=password -dscope=openid | jq -r .access_token`
 		echo
 		echo "Payload:"
 		echo $TOKEN | cut -f2 -d. | base64 -d | jq -r
 		echo
 		echo "UserInfo:"
-		curl $OICD_URL/userinfo -s -H"Authorization: Bearer $TOKEN" | jq -r
+		curl -s $OICD_URL/userinfo -H"Authorization: Bearer $TOKEN" | jq -r
 		echo
-		curl backend.127.0.0.1.nip.io:8080/protected -H "Authorization: Bearer $TOKEN" | jq
+		echo "Backend:"
+		curl -s http://backend.127.0.0.1.nip.io:8080/protected -H "Authorization: Bearer $TOKEN" | jq -r
 	</pre>
 </body>
