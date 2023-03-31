@@ -1,10 +1,8 @@
----
 apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: jwt-verifier
 spec:
-  replicas: 1
   selector:
     matchLabels:
       app: jwt-verifier
@@ -21,11 +19,11 @@ spec:
             - containerPort: 80
           env:
             - name: DISCOVERY_URL
-              value: "https://my-oidc-provider/.well-known/openid-configuration"
+              value: http://keycloak.127.0.0.1.nip.io:8080/realms/kokuwa/.well-known/openid-configuration
             - name: CLIENT_ID
-              value: "my--client-id"
+              value: test-client
             - name: CLIENT_SECRET
-              value: "my-client-secret"
+              value: "nope"
             - name: LOG_LEVEL
               value: debug
             - name: LOGOUT_QUERY_PARAM
