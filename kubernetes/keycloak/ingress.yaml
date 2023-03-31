@@ -14,23 +14,3 @@ spec:
                 name: keycloak
                 port:
                   name: http
-    - host: auth.kokuwa.127.0.0.1.nip.io
-      http:
-        paths:
-          - path: /
-            pathType: Prefix
-            backend:
-              service:
-                name: keycloak
-                port:
-                  name: http
-    - host: auth.test.127.0.0.1.nip.io
-      http:
-        paths:
-          - path: /
-            pathType: Prefix
-            backend:
-              service:
-                name: keycloak
-                port:
-                  name: http

@@ -21,9 +21,9 @@ spec:
             - name: DISCOVERY_URL
               value: http://keycloak.127.0.0.1.nip.io:8080/realms/kokuwa/.well-known/openid-configuration
             - name: CLIENT_ID
-              value: test-client
+              value: angular
             - name: CLIENT_SECRET
-              value: "nope"
+              value: changeMe
             - name: LOG_LEVEL
               value: debug
             - name: LOGOUT_QUERY_PARAM

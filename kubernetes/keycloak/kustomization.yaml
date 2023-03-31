@@ -11,9 +11,7 @@ configMapGenerator:
       - KC_LOG_CONSOLE_COLOR=true
       - KC_LOG_CONSOLE_OUTPUT=default
   - name: keycloak-realms
-    files:
-      - files/kokuwa-realm.json
-      - files/test-realm.json
+    files: [files/kokuwa-realm.json]
 
 secretGenerator:
   - name: keycloak-database
