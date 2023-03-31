@@ -12,6 +12,36 @@ spec:
         app.kubernetes.io/name: keycloak
     spec:
       initContainers:
+        - name: postgresql
+          image: postgres:15.2
+          command: [sh, -c, until psql ; do sleep 1 ; done]
+          env:
+            - name: PGCONNECT_TIMEOUT
+              value: "1"
+            - name: PGHOST
+              valueFrom:
+                secretKeyRef:
+                  name: keycloak-database
+                  key: KC_DB_URL_HOST
+            - name: PGDATABASE
+              valueFrom:
+                secretKeyRef:
+                  name: keycloak-database
+                  key: KC_DB_URL_DATABASE
+            - name: PGUSER
+              valueFrom:
+                secretKeyRef:
+                  name: keycloak-database
+                  key: KC_DB_USERNAME
+            - name: PGPASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: keycloak-database
+                  key: KC_DB_PASSWORD
+          securityContext:
+            runAsUser: 10001
+            runAsGroup: 10001
+            readOnlyRootFilesystem: true
         - name: realms
           image: kokuwaio/keycloak:21.0.1-distroless-import
           envFrom:
