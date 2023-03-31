@@ -16,7 +16,6 @@ spec:
       containers:
         - name: postgresql
           image: postgres:15.2-alpine
-          imagePullPolicy: Never
           envFrom:
             - secretRef:
                 name: postgresql-secret

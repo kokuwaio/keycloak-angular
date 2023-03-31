@@ -21,7 +21,6 @@ spec:
       containers:
         - name: keycloak
           image: kokuwaio/keycloak/21.0.1-distroless
-          imagePullPolicy: Never
           envFrom:
             - configMapRef:
                 name: keycloak-config

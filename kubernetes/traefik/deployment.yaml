@@ -20,7 +20,6 @@ spec:
       containers:
         - name: traefik
           image: traefik:v3.0.0
-          imagePullPolicy: Never
           args:
             - --providers.kubernetesingress=true
             - --entrypoints.traefik.address=:8090
