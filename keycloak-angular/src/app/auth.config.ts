@@ -1,12 +1,13 @@
 import { AuthConfig } from 'angular-oauth2-oidc';
 
 export const authCodeFlowConfig: AuthConfig = {
-  issuer: 'https://idsvr4.azurewebsites.net',
-  redirectUri: window.location.origin + '/index.html',
-  clientId: 'spa',
+  issuer: 'http://keycloak.127.0.0.1.nip.io:8080/realms/kokuwa',
+  redirectUri: window.location.origin + '/',
+  clientId: 'angular',
+  dummyClientSecret: 'changeMe',
+  requireHttps: false,
   responseType: 'code',
-  scope: 'openid profile email offline_access api',
+  scope: 'openid',
   showDebugInformation: true,
-  timeoutFactor: 0.01,
-  checkOrigin: false,
+  timeoutFactor: 0.01
 };
