@@ -1,10 +1,8 @@
 apiVersion: apps/v1
-kind: StatefulSet
+kind: Deployment
 metadata:
   name: postgresql
 spec:
-  replicas: 1
-  serviceName: postgresql
   selector:
     matchLabels:
       app: postgresql
@@ -49,10 +47,10 @@ spec:
           securityContext:
             runAsNonRoot: true
             readOnlyRootFilesystem: true
-            capabilities:
-              drop: [ALL]
             privileged: false
             allowPrivilegeEscalation: false
+            capabilities:
+              drop: [ALL]
       automountServiceAccountToken: false
       terminationGracePeriodSeconds: 10
       securityContext:

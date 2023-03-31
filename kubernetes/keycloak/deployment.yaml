@@ -1,10 +1,8 @@
 apiVersion: apps/v1
-kind: StatefulSet
+kind: Deployment
 metadata:
   name: keycloak
 spec:
-  serviceName: keycloak-headless
-  replicas: 1
   selector:
     matchLabels:
       app.kubernetes.io/name: keycloak
@@ -12,10 +10,6 @@ spec:
     metadata:
       labels:
         app.kubernetes.io/name: keycloak
-      annotations:
-        prometheus.io/scrape: "true"
-        prometheus.io/port: "8080"
-        prometheus.io/path: /realms/master/metrics
     spec:
       initContainers:
         - name: postgresql

@@ -12,10 +12,6 @@ spec:
     metadata:
       labels:
         app.kubernetes.io/name: traefik
-      annotations:
-        prometheus.io/scrape: "true"
-        prometheus.io/port: "8090"
-        prometheus.io/path: /metrics
     spec:
       containers:
         - name: traefik
@@ -50,6 +46,7 @@ spec:
           securityContext:
             runAsUser: 10001
             runAsGroup: 10001
+            runAsNonRoot: true
             readOnlyRootFilesystem: true
             privileged: false
             allowPrivilegeEscalation: false
