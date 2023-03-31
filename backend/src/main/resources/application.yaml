@@ -2,6 +2,13 @@ micronaut:
   application:
     name: keycloak-angular
 
+  ## see https://docs.micronaut.io/latest/guide/index.html#cors
+  server:
+    cors:
+      enabled: true
+      default:
+        allowedMethods: [GET]
+
   ## see https://micronaut-projects.github.io/micronaut-security/latest/guide/#interceptUrlMap
   security:
     intercept-url-map:

@@ -22,6 +22,10 @@ spec:
           env:
             - name: MICRONAUT_SECURITY_TOKEN_JWT_SIGNATURES_JWKS_KEYCLOAK_URL
               value: http://keycloak.127.0.0.1.nip.io:8080/realms/kokuwa/protocol/openid-connect/certs
+            - name: LOGBACK_APPENDER
+              value: CONSOLE
+            - name: LOGGER_LEVELS_IO_MICRONAUT_HTTP
+              value: TRACE
           startupProbe:
             httpGet:
               path: /endpoints/health
