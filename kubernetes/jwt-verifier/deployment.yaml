@@ -1,0 +1,38 @@
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: jwt-verifier
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: jwt-verifier
+  template:
+    metadata:
+      labels:
+        app: jwt-verifier
+    spec:
+      containers:
+        - image: evolutio/jwt-verifier:latest
+          imagePullPolicy: IfNotPresent
+          name: jwt-verifier
+          ports:
+            - containerPort: 80
+          env:
+            - name: DISCOVERY_URL
+              value: "https://my-oidc-provider/.well-known/openid-configuration"
+            - name: CLIENT_ID
+              value: "my--client-id"
+            - name: CLIENT_SECRET
+              value: "my-client-secret"
+            - name: LOG_LEVEL
+              value: debug
+            - name: LOGOUT_QUERY_PARAM
+              value: my-fancy-logout-param
+            - name: LOGOUT_REDIRECT_URL
+              value: "https://google.de"
+            - name: PROTECTED_URL_PATH
+              value: "/"
+            - name: EXTRA_USERINFO_FIELDS
+              value: "email,family_name,email_verified"

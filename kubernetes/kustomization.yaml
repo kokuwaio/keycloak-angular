@@ -2,6 +2,7 @@ resources:
   - dashboard
   - echoserver
   - help
+  - jwt-verifier
   - keycloak
   - postgresql
   - traefik
